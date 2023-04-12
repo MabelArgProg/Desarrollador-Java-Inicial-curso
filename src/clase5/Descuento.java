@@ -14,5 +14,5 @@ public abstract class Descuento {
 		public void setValorDesc(float valor) {
 			this.valor = valor;
 		}
-		public abstract float valorFinal(float valorInicial);//quien me lee tiene que implementarme
+		public abstract float valorFinal(float valorInicial) throws ValorCeroException, TotalNegativoException;//quien me lee tiene que implementarme
 }

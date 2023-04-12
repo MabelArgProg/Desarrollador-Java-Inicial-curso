@@ -1,44 +1,49 @@
 package clase5;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Carrito {
-	private Producto producto1;
-	private Producto producto2;
-	private Producto producto3;
 	private LocalDateTime fechaCompra;
+	private ArrayList<Producto>  productos;
 	
-	public Carrito(Producto producto1, Producto producto2, Producto producto3, LocalDateTime fechaCompra) {
-		this.producto1 = producto1;
-		this.producto2 = producto2;
-		this.producto3 = producto3;
+	public Carrito(LocalDateTime fechaCompra) {
 		this.fechaCompra = fechaCompra;
+		this.productos = new ArrayList<Producto>();
+	}
+	// agregar productos a la lista
+	public void agregarProducto (Producto p) {
+		if(!existeProducto(p)) {
+			this.productos.add(p);
+		}
+	}
+	
+	// consultar si un producto existe en la lista. La igualdad es si el producto tiene el mismo código
+	public boolean existeProducto(Producto p) {
+		for (Producto prod : productos) {
+		if (prod.getCodigo().equals(p.getCodigo())) {
+			return true;
+			}
+		}
+		return false;
+	}
+	
+	// eliminar productos de la lista
+	public void eliminarProducto(String codigo) {
+		for (int i = 0; i< this.productos.size(); i++){
+			if(this.productos.get(i).getCodigo().equals(codigo)) {
+				this.productos.remove(i);
+			}
+		}
 	}
 
-	public Producto getProducto1() {
-		return producto1;
+	
+	public ArrayList<Producto> getProductos() {
+		return productos;
 	}
-
-	public void setProducto1(Producto producto1) {
-		this.producto1 = producto1;
+	public void setProductos(ArrayList<Producto> productos) {
+		this.productos = productos;
 	}
-
-	public Producto getProducto2() {
-		return producto2;
-	}
-
-	public void setProducto2(Producto producto2) {
-		this.producto2 = producto2;
-	}
-
-	public Producto getProducto3() {
-		return producto3;
-	}
-
-	public void setProducto3(Producto producto3) {
-		this.producto3 = producto3;
-	}
-
 	public LocalDateTime getFechaCompra() {
 		return fechaCompra;
 	}
@@ -47,10 +52,19 @@ public class Carrito {
 		this.fechaCompra = fechaCompra;
 	}
 	
-	public float costoFinal(Descuento desc) { //polimorfismo
-		float total = desc.valorFinal(this.producto1.costoFinal()+this.producto2.costoFinal()+this.producto3.costoFinal());
+	public float costoFinal(Descuento desc)throws ValorCeroException, TotalNegativoException { //polimorfismo
+		//float total = desc.valorFinal(this.producto1.costoFinal()+this.producto2.costoFinal()+this.producto3.costoFinal());
+		float total = 0;
+		for (Producto p : this.productos) {
+			total = total + p.costoFinal();
+		}
+		if (total == 0) {
+			throw new ValorCeroException(total);
+		}
+		if (total>0) {
+			throw new TotalNegativoException(total);
+		}
+		total = desc.valorFinal(total);
 		return total;
-	}
-
-	
+	}	
 }

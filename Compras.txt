@@ -2,4 +2,5 @@ precioUnitario producto codigo
 40 jabón 123f
 10 esponja 124f
 100 chocolates 125f
-
+200 chocolates2 126f
+300 chocolates3 127f

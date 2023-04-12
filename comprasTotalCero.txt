@@ -1,0 +1,6 @@
+precioUnitario producto codigo
+0 jabón 123f
+0 esponja 124f
+0 chocolates 125f
+0 chocolates2 126f
+0 chocolates3 127f
